@@ -2,12 +2,10 @@ package com.gamblippon.domain.usecase
 
 import com.gamblippon.domain.model.Player
 
-class PlayerManagementImpl : PlayerManagement {
+class PlayerManagementImpl(private val playerPort: PlayerPort) : PlayerManagement {
 
-    lateinit var playerPort: PlayerPort
-
-    override fun add(nickname: String): Player {
-        return playerPort.save(nickname)
+    override fun add(player: Player): Player {
+        return playerPort.save(player)
     }
 
 }

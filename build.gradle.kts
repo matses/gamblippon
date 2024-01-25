@@ -7,11 +7,15 @@ val postgres_version: String by project
 val h2_version: String by project
 val mockito_version: String by project
 val mockk_version: String by project
+val koin_ktor: String by project
+val koin_ksp_version: String by project
+val kotest_junit5: String by project
 
 plugins {
     kotlin("jvm") version "1.9.22"
     id("io.ktor.plugin") version "2.3.7"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.22"
+    id("com.google.devtools.ksp") version "1.9.22-1.0.17"
 }
 
 group = "com.gamblippon"
@@ -42,9 +46,16 @@ dependencies {
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("io.ktor:ktor-server-config-yaml:2.3.7")
-    testImplementation("io.ktor:ktor-server-tests-jvm")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:$kotlin_version")
+    implementation("io.insert-koin:koin-ktor:$koin_ktor")
+    implementation("io.insert-koin:koin-logger-slf4j:$koin_ktor")
+    implementation("io.ktor:ktor-server-double-receive:$ktor_version")
+
     testImplementation("io.mockk:mockk:$mockk_version")
+    testImplementation("io.ktor:ktor-server-test-host:$ktor_version")
+    testImplementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+    testImplementation("io.insert-koin:koin-test-junit5:$koin_ktor")
+    testImplementation("io.kotest:kotest-runner-junit5:$kotest_junit5")
+
 }
 
 tasks.test {

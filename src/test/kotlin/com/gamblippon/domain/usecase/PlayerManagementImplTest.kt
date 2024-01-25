@@ -2,13 +2,13 @@ package com.gamblippon.domain.usecase
 
 import com.gamblippon.domain.model.Player
 import com.gamblippon.infra.secondary.database.PlayerRepository
+import io.kotest.matchers.shouldBe
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
 
 class PlayerManagementImplTest {
 
@@ -16,7 +16,7 @@ class PlayerManagementImplTest {
     lateinit var playerRepository : PlayerRepository
 
     @InjectMockKs
-    private var playerManagement = PlayerManagementImpl()
+    lateinit var playerManagement : PlayerManagementImpl
 
     @BeforeEach
     fun setUp() {
@@ -26,12 +26,12 @@ class PlayerManagementImplTest {
     @Test
     fun `should add player`() {
         var expectedNickname = "Johnny B Goode"
-        var expectedPlayer = Player(expectedNickname)
-        every { playerRepository.save(expectedNickname) } returns expectedPlayer;
+        var expectedPlayer = Player(expectedNickname, null)
+        every { playerRepository.save(expectedPlayer) } returns expectedPlayer;
 
-        var effectivePlayer = playerManagement.add(expectedNickname)
+        var effectivePlayer = playerManagement.add(expectedPlayer)
 
-        assertEquals(expectedPlayer, effectivePlayer)
+        effectivePlayer shouldBe expectedPlayer
     }
 
 }

@@ -5,8 +5,8 @@ import com.gamblippon.domain.usecase.PlayerPort
 
 class PlayerRepository:PlayerPort{
 
-    override fun save(nickname: String): Player {
-        return Player(nickname);
+    override fun save(player: Player): Player {
+        return player;
     }
 
 }
