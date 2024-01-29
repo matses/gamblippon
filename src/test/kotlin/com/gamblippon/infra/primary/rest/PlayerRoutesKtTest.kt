@@ -14,6 +14,7 @@ import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.config.*
 import io.ktor.server.testing.*
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.AfterEach
@@ -65,7 +66,7 @@ class PlayerRoutesKtTest {
             var nickname = "Billy the Kick"
             val playerDto = PlayerDto(nickname)
             val expectedId = "123"
-            every { mockPlayerManagement.add(any<Player>()) } returns Player(nickname, expectedId);
+            coEvery { mockPlayerManagement.add(any<Player>()) } returns Player(nickname, expectedId);
             val response = client.post("/player") {
                 contentType(ContentType.Application.Json)
                 setBody(playerDto)

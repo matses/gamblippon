@@ -1,10 +1,12 @@
 package com.gamblippon
 
-import com.gamblippon.plugins.*
+import com.gamblippon.infra.secondary.database.DatabaseConfiguration
+import com.gamblippon.plugins.configureHTTP
+import com.gamblippon.plugins.configureRouting
+import com.gamblippon.plugins.configureSerialization
+import com.gamblippon.plugins.koin
 import io.ktor.server.application.*
 import io.ktor.server.plugins.doublereceive.*
-import org.koin.ktor.plugin.Koin
-import org.koin.logger.slf4jLogger
 
 fun main(args: Array<String>) {
     io.ktor.server.netty.EngineMain.main(args)
@@ -12,9 +14,9 @@ fun main(args: Array<String>) {
 
 fun Application.module() {
     configureSerialization()
-    //configureDatabases()
     configureHTTP()
     configureRouting()
     koin()
     install(DoubleReceive)
+    DatabaseConfiguration.init(environment)
 }

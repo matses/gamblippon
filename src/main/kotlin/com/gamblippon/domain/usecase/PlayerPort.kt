@@ -4,5 +4,5 @@ import com.gamblippon.domain.model.Player
 
 interface PlayerPort {
 
-    fun save(player: Player): Player
+    suspend fun save(player: Player): Player
 }

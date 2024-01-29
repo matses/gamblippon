@@ -4,5 +4,5 @@ import com.gamblippon.domain.model.Player
 
 interface PlayerManagement {
 
-        fun add(player: Player): Player;
+        suspend fun add(player: Player): Player;
 }

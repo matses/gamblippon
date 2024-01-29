@@ -2,9 +2,10 @@ package com.gamblippon.domain.usecase
 
 import com.gamblippon.domain.model.Player
 import com.gamblippon.infra.secondary.database.PlayerRepository
+import io.kotest.common.runBlocking
 import io.kotest.matchers.shouldBe
 import io.mockk.MockKAnnotations
-import io.mockk.every
+import io.mockk.coEvery
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import org.junit.jupiter.api.BeforeEach
@@ -24,10 +25,10 @@ class PlayerManagementImplTest {
     }
 
     @Test
-    fun `should add player`() {
+    fun `should add player`(): Unit = runBlocking {
         var expectedNickname = "Johnny B Goode"
         var expectedPlayer = Player(expectedNickname, null)
-        every { playerRepository.save(expectedPlayer) } returns expectedPlayer;
+        coEvery { playerRepository.save(expectedPlayer) } returns expectedPlayer;
 
         var effectivePlayer = playerManagement.add(expectedPlayer)
 
