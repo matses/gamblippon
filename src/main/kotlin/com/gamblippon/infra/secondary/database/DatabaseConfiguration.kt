@@ -14,7 +14,8 @@ object DatabaseConfiguration {
         val jdbcURL = environment.config.propertyOrNull("database.jdbcURL")?.getString() ?: "jdbc:h2:file:./build/db"
         val database = Database.connect(jdbcURL, driverClassName)
         transaction(database) {
-            SchemaUtils.create(PlayerDao.Player)
+            SchemaUtils.create(Players)
+            SchemaUtils.create(Points)
         }
     }
 

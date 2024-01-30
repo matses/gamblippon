@@ -1,7 +1,7 @@
 package com.gamblippon.domain.usecase
 
 import com.gamblippon.domain.model.Player
-import com.gamblippon.infra.secondary.database.PlayerRepository
+import com.gamblippon.domain.model.Point
 import io.kotest.common.runBlocking
 import io.kotest.matchers.shouldBe
 import io.mockk.MockKAnnotations
@@ -14,7 +14,10 @@ import org.junit.jupiter.api.Test
 class PlayerManagementImplTest {
 
     @MockK
-    lateinit var playerRepository : PlayerRepository
+    lateinit var playerPort : PlayerPort
+
+    @MockK
+    lateinit var pointPort : PointPort
 
     @InjectMockKs
     lateinit var playerManagement : PlayerManagementImpl
@@ -28,7 +31,8 @@ class PlayerManagementImplTest {
     fun `should add player`(): Unit = runBlocking {
         var expectedNickname = "Johnny B Goode"
         var expectedPlayer = Player(expectedNickname, null)
-        coEvery { playerRepository.save(expectedPlayer) } returns expectedPlayer;
+        coEvery { playerPort.save(expectedPlayer) } returns expectedPlayer;
+        coEvery { pointPort.save(any()) } returns Point(expectedPlayer.id);
 
         var effectivePlayer = playerManagement.add(expectedPlayer)
 

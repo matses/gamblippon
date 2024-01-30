@@ -1,4 +1,5 @@
-import com.gamblippon.infra.secondary.database.PlayerDao
+import com.gamblippon.infra.secondary.database.Players
+import com.gamblippon.infra.secondary.database.Points
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.jetbrains.exposed.sql.Database
@@ -27,7 +28,8 @@ object TestDatabase {
         Database.connect(dataSource)
 
         transaction {
-            SchemaUtils.create(PlayerDao.Player)
+            SchemaUtils.create(Players)
+            SchemaUtils.create(Points)
         }
     }
 }
