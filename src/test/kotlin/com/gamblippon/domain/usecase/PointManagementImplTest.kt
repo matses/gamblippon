@@ -29,12 +29,12 @@ class PointManagementImplTest {
         val point = Point("1", "idPlayer1", 3)
         val total = 7
         coEvery { rankingPort.getFromPlayerId(playerId) } returns point;
-        every { rankingPort.updateTotal(playerId, total) } returns Unit;
+        coEvery { rankingPort.updateTotal(playerId, total) } returns true;
 
         rankingManagement.add(playerId, 4)
 
         coVerify { rankingPort.getFromPlayerId(playerId) }
-        verify { rankingPort.updateTotal(playerId, total) }
+        coVerify { rankingPort.updateTotal(playerId, total) }
     }
 
     @Test
@@ -52,13 +52,13 @@ class PointManagementImplTest {
     }
 
     @Test
-    fun `should update total`() {
+    fun `should update total`(): Unit = runBlocking {
         val playerId = "idPlayer1"
         val total = 8
-        every { rankingPort.updateTotal(playerId, total) } returns Unit;
+        coEvery { rankingPort.updateTotal(playerId, total) } returns true;
 
         rankingManagement.updateTotal(playerId, total)
 
-        verify { rankingPort.updateTotal(playerId, total) }
+        coVerify { rankingPort.updateTotal(playerId, total) }
     }
 }

@@ -9,10 +9,12 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 object DatabaseConfiguration {
     fun init(environment: ApplicationEnvironment) {
-        val driverClassName = environment.config.propertyOrNull("database.driverClassName")?.getString() ?: "org.h2.Driver"
+        val driverClassName = environment.config.propertyOrNull("database.driverClassName")?.getString() ?: "org.postgresql.Driver"
 
-        val jdbcURL = environment.config.propertyOrNull("database.jdbcURL")?.getString() ?: "jdbc:h2:file:./build/db"
-        val database = Database.connect(jdbcURL, driverClassName)
+        val jdbcURL = environment.config.propertyOrNull("database.jdbcURL")?.getString() ?: "jdbc:postgresql://localhost:5432/gamblippon"
+        val user = environment.config.propertyOrNull("database.user")?.getString() ?: "root"
+        val psswd = environment.config.propertyOrNull("database.password")?.getString() ?: "password"
+        val database = Database.connect(jdbcURL, driverClassName, user, psswd)
         transaction(database) {
             SchemaUtils.create(Players)
             SchemaUtils.create(Points)

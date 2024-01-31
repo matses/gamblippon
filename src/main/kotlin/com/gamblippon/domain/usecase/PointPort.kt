@@ -1,6 +1,7 @@
 package com.gamblippon.domain.usecase
 
 import com.gamblippon.domain.model.Point
+import com.gamblippon.domain.model.Ranking
 
 interface PointPort {
 
@@ -8,7 +9,9 @@ interface PointPort {
 
     suspend fun getFromPlayerId(id: String): Point?
 
-    fun updateTotal(playerId: String, i: Int) {
+    suspend fun updateTotal(playerId: String, total: Int): Boolean
 
-    }
+    suspend fun getRanking(): List<Ranking>
+
+    suspend fun getRanking(playerId : String): Ranking?
 }

@@ -2,9 +2,8 @@ package com.gamblippon.infra.secondary.database
 
 import com.gamblippon.domain.model.Player
 import com.gamblippon.domain.usecase.PlayerPort
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
 class PlayerRepository:PlayerPort{
 
@@ -18,7 +17,8 @@ class PlayerRepository:PlayerPort{
 
     override suspend fun get(id: String): Player? = DatabaseConfiguration.dbQuery {
         Players
-            .select { Players.id eq id }
+            .selectAll()
+            .where { Players.id eq id }
             .map(::toPlayer)
             .singleOrNull()
     }

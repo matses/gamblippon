@@ -6,5 +6,5 @@ interface PointManagement {
 
     suspend fun add(playerId: String, points: Int)
 
-    fun updateTotal(playerId: String, total: Int)
+    suspend fun updateTotal(playerId: String, total: Int)
 }
